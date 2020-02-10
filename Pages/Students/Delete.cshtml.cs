@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ContosoUniversity.Data;
-using ContosoUniversity.Models;
+using System.Threading.Tasks;
 
-namespace ContosoUniversity
+namespace ContosoUniversity.Pages.Students
 {
     public class DeleteModel : PageModel
     {
@@ -20,6 +16,7 @@ namespace ContosoUniversity
         }
 
         [BindProperty]
+        public Student Student { get; set; }
         public string ErrorMessage { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id, bool? saveChangesError = false)
@@ -30,17 +27,19 @@ namespace ContosoUniversity
             }
 
             Student = await _context.Students
-                                .AsNoTracking()
-                                .FirstOrDefaultAsync(m => m.ID == id);
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Student == null)
             {
                 return NotFound();
             }
+
             if (saveChangesError.GetValueOrDefault())
             {
                 ErrorMessage = "Delete failed. Try again";
             }
+
             return Page();
         }
 
