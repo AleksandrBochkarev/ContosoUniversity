@@ -51,11 +51,13 @@ namespace ContosoUniversity
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseRequestLocalization("en-US"); //support for locale en us
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
         }
+
     }
 }
